@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container py-4 py-lg-5 my-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+          <h2 class="h3 mb-4">Account Registration Successful</h2>
+          <p class="font-size-md">You have successfully created your account. In order to continue, you must activate your account.</p>
+          <ol class="list-unstyled font-size-md">
+            <li><span class="text-primary mr-2">1.</span>We have sent you an email. Check your spam if you can't find our mail and click the link to activate your account</li>
+            <li><span class="text-primary mr-2">2.</span>We'll be emailing you occasionally for promotions and services.</li>
+            <li><span class="text-primary mr-2">3.</span>Don't also forget to remove us from your spam by adding us to your mailing list.</li>
+          </ol>
+          <div class="card py-2 mt-4">
+            <form class="card-body needs-validation" novalidate>
+{#              <div class="form-group">#}
+{#                <label for="recover-email">Enter your email address</label>#}
+{#                <input class="form-control" type="email" id="recover-email" required>#}
+{#                <div class="invalid-feedback">Please provide valid email address.</div>#}
+{#              </div>#}
+              <a href="{% url 'home' %}" class="btn btn-primary" type="submit"><i class="czi-arrow-left"></i> Continue Shopping</a>
+            </form>
+          </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

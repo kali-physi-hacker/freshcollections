@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  dev:
+    build: .
+    command: python /estore/manage.py runserver 0.0.0.0:8000
+    environment:
+      - DJANGO_SETTINGS_MODULE=estore.settings.dev
+    volumes:
+      - .:/estore
+    ports:
+      - 8001:8001
+
+  stage:
+    build: .
+    command: python /estore/manage.py runserver 0.0.0.0:8000
+    environment:
+      - DJANGO_SETTINGS_MODULE=estore.settings.stage
+    volumes:
+      - .:/estore
+    ports:
+      - 8002:8002
+
+  production:
+    build: .
+    command: python /estore/manage.py runserver 0.0.0.0:8000
+    environment:
+      - DJANGO_SETTINGS_MODULE=estore.settings.prod
+    volumes:
+      - .:/estore
+    ports:
+      - 8000:8000

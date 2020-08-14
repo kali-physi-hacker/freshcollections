@@ -1,0 +1,81 @@
+<div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+          <li class="nav-item"><a class="nav-link active" href="#signin-tab" data-toggle="tab" role="tab" aria-selected="true"><i class="czi-unlocked mr-2 mt-n1"></i>Sign in</a></li>
+          <li class="nav-item"><a class="nav-link" href="#signup-tab" data-toggle="tab" role="tab" aria-selected="false"><i class="czi-user mr-2 mt-n1"></i>Sign up</a></li>
+        </ul>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body tab-content py-4">
+        <form method="POST" action="{% url 'authentication:login' %}" class="needs-validation tab-pane fade show active" autocomplete="off" id="signin-tab">
+            {% csrf_token %}
+          <div class="form-group">
+            <label for="{{ login_form.username.id_for_label }}">Email address</label>
+            <input name="{{ login_form.username.name }}" class="form-control" type="email" id="{{ login_form.username.id_for_label }}" placeholder="johndoe@example.com" required>
+            <div class="invalid-feedback">Please provide a valid email address.</div>
+          </div>
+          <div class="form-group">
+            <label for="{{ login_form.password.id_for_label }}">Password</label>
+            <div class="password-toggle">
+              <input name="{{ login_form.password.name }}" class="form-control" type="password" id="{{ login_form.password.id_for_label }}" required>
+              <label class="password-toggle-btn">
+                <input class="custom-control-input" type="checkbox"><i class="czi-eye password-toggle-indicator"></i><span class="sr-only">Show password</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-group d-flex flex-wrap justify-content-between">
+            <div class="custom-control custom-checkbox mb-2">
+              <input class="custom-control-input" type="checkbox" id="si-remember">
+              <label class="custom-control-label" for="si-remember">Remember me</label>
+            </div><a class="font-size-sm" href="{% url 'authentication:forgot_password' %}">Forgot password?</a>
+          </div>
+          <button class="btn btn-primary btn-block btn-shadow" type="submit">Sign in</button>
+        </form>
+        <form method="POST" action="{% url 'authentication:register' %}" class="needs-validation tab-pane fade" autocomplete="off" id="signup-tab">
+            {% csrf_token %}
+          <div class="form-group">
+            <label for="{{ registration_form.first_name.id_for_label }}">First Name</label>
+            <input name="{{ registration_form.first_name.name }}" class="form-control" type="text" id="{{ registration_form.first_name.id_for_label }}" placeholder="John" required>
+            <div class="invalid-feedback">Please fill in your name.</div>
+          </div>
+            <div class="form-group">
+            <label for="{{ registration_form.last_name.id_for_label }}">Last Name</label>
+            <input name="{{ registration_form.last_name.name }}" class="form-control" type="text" id="{{ registration_form.last_name.id_for_label }}" placeholder="Doe" required>
+            <div class="invalid-feedback">Please fill in your name.</div>
+          </div>
+          <div class="form-group">
+            <label for="{{ registration_form.username.id_for_label }}">Email address</label>
+            <input name="{{ registration_form.username.name }}" class="form-control" type="email" id="{{ registration_form.username.id_for_label }}" placeholder="johndoe@example.com" required>
+            <div class="invalid-feedback">Please provide a valid email address.</div>
+          </div>
+          <div class="form-group">
+            <label for="{{ registration_form.password1.id_for_label }}">Password</label>
+            <div class="password-toggle">
+              <input name="{{ registration_form.password1.name }}" class="form-control" type="password" id="{{ registration_form.password1.id_for_label }}" required>
+              <label class="password-toggle-btn">
+                <input class="custom-control-input" type="checkbox"><i class="czi-eye password-toggle-indicator"></i><span class="sr-only">Show password</span>
+              </label>
+            </div>
+            <div class="invalid-tooltip">Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.</div>
+            <small id="password-help-text" class="form-text text-muted">Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.</small>
+            <div class="valid-tooltip">Looks good!</div>
+          </div>
+          <div class="form-group">
+            <label for="{{ registration_form.password2.id_for_label }}">Confirm password</label>
+            <div class="password-toggle">
+              <input name="{{ registration_form.password2.name }}" class="form-control" type="password" id="{{ registration_form.password2.id_for_label }}" required>
+              <label class="password-toggle-btn">
+                <input class="custom-control-input" type="checkbox"><i class="czi-eye password-toggle-indicator"></i><span class="sr-only">Show password</span>
+              </label>
+            </div>
+            <div id="password-valid-div" class="valid-tooltip">Looks good</div>
+            <div id="password-invalid-div" class="invalid-tooltip">Password mismatch</div>
+          </div>
+          <button class="btn btn-primary btn-block btn-shadow" type="submit">Sign up</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

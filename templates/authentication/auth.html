@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container py-4 py-lg-5 my-4">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card border-0 box-shadow">
+            <div class="card-body">
+              <h2 class="h4 mb-1">Sign in</h2>
+              <div class="py-3">
+                <h3 class="d-inline-block align-middle font-size-base font-weight-semibold mb-2 mr-2">With social account:</h3>
+                <div class="d-inline-block align-middle"><a class="social-btn sb-google mr-2 mb-2" href="#" data-toggle="tooltip" title="Sign in with Google"><i class="czi-google"></i></a><a class="social-btn sb-facebook mr-2 mb-2" href="#" data-toggle="tooltip" title="Sign in with Facebook"><i class="czi-facebook"></i></a><a class="social-btn sb-twitter mr-2 mb-2" href="#" data-toggle="tooltip" title="Sign in with Twitter"><i class="czi-twitter"></i></a></div>
+                {% if messages|length > 0 %}
+                  <div class="errornote text-center text-danger font-size-sm">{% for message in messages %}{{ message }}{% endfor %}</div>
+                {% endif %}
+              </div>
+              <hr>
+              <h3 class="font-size-base pt-4 pb-2">Or using form below</h3>
+              <form method="POST" class="needs-validation" action="{% url 'authentication:login' %}" autocomplete="off" novalidate>
+                  {% csrf_token %}
+                <div class="input-group-overlay form-group">
+                  <div class="input-group-prepend-overlay"><span class="input-group-text"><i class="czi-mail"></i></span></div>
+                  <input name="{{ login_form.username.name }}" id="{{ login_form.username.id_for_label }}" class="form-control prepended-form-control" type="email" placeholder="Email" required>
+                </div>
+                <div class="input-group-overlay form-group">
+                  <div class="input-group-prepend-overlay"><span class="input-group-text"><i class="czi-locked"></i></span></div>
+                  <div class="password-toggle">
+                    <input name="{{ login_form.password.name }}" id="{{ login_form.password.id_for_label }}" class="form-control prepended-form-control" type="password" placeholder="Password" required>
+                    <label class="password-toggle-btn">
+                      <input class="custom-control-input" type="checkbox"><i class="czi-eye password-toggle-indicator"></i><span class="sr-only">Show password</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="d-flex flex-wrap justify-content-between">
+                  <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" checked id="remember_me">
+                    <label class="custom-control-label" for="remember_me">Remember me</label>
+                  </div><a class="nav-link-inline font-size-sm" href="{% url 'authentication:forgot_password' %}">Forgot password?</a>
+                </div>
+                <hr class="mt-4">
+                <div class="text-right pt-4">
+                  <button class="btn btn-primary" type="submit"><i class="czi-sign-in mr-2 ml-n21"></i>Sign In</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 pt-4 mt-3 mt-md-0">
+          <h2 class="h4 mb-3">No account? Sign up</h2>
+          <p class="font-size-sm text-muted mb-4">Registration takes less than a minute but gives you full control over your orders.</p>
+          <form method="POST" action="{% url 'authentication:register' %}" class="needs-validation" autocomplete="off" novalidate id="signup">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="{{ registration_form.first_name.id_for_label }}">First Name</label>
+                  <input placeholder="eg. John" minlength="3" name="{{ registration_form.first_name.name }}" class="form-control" type="text" required id="{{ registration_form.first_name.id_for_label }}">
+                  <div class="invalid-tooltip">Please enter a valid first name! (3 or more characters)</div>
+                    <div class="valid-tooltip">Looks good!</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="{{ registration_form.last_name.id_for_label }}">Last Name</label>
+                  <input placeholder="eg. Doe" minlength="3" name="{{ registration_form.last_name.name }}" class="form-control" type="text" required id="{{ registration_form.last_name.id_for_label }}">
+                  <div class="invalid-tooltip">Please enter a valid name last name! (3 or more characters)</div>
+                    <div class="valid-tooltip">Looks good!</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="{{ registration_form.username.id_for_label }}">E-mail Address</label>
+                  <input placeholder="johndoe@email.com" name="{{ registration_form.username.name }}" class="form-control" type="email" required id="{{ registration_form.username.id_for_label }}">
+                  <div class="invalid-tooltip">Please enter a valid email!</div>
+                    <div class="valid-tooltip">Looks good!</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="id_phone">Phone Number</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">+233</div>
+                        </div>
+                      <input placeholder="502224321" name="phone" class="form-control" type="tel" min="0" minlength="9" id="id_phone">
+                    </div>
+                    <small class="form-text text-muted">Optional: You can leave this field out and fill later</small>
+                    <div class="invalid-tooltip">Please enter a valid phone number!</div>
+                    <div class="valid-tooltip">Looks good!</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="{{ registration_form.password1.id_for_label }}">Password</label>
+                  <input name="{{ registration_form.password1.name }}" class="form-control" type="password" required id="{{ registration_form.password1.id_for_label }}">
+                  <div class="invalid-tooltip">Please enter a valid password!</div>
+                    <div class="invalid-tooltip">Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.</div>
+                    <small id="password-help-text" class="form-text text-muted">Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.</small>
+                    <div class="valid-tooltip">Looks good!</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="{{ registration_form.password2.id_for_label }}-confirm">Confirm Password</label>
+                  <input name="{{ registration_form.password2.name }}" class="form-control" type="password" required id="{{ registration_form.password2.id_for_label }}-confirm">
+                  <div id="password-valid-div" class="valid-tooltip">Looks good</div>
+                    <div id="password-invalid-div" class="invalid-tooltip">Password mismatch</div>
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary" type="submit"><i class="czi-user mr-2 ml-n1"></i>Sign Up</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'js/utils.js' %}"></script>
+    <script>
+        const password2ErrorText = document.querySelector("#password-invalid-div");
+        const password2ValidText = document.querySelector("#password-valid-div");
+        const passwordHelpText = document.querySelector("#password-help-text")
+
+        const password1Input = signUpForm.password1;
+        const password2Input = signUpForm.password2;
+
+        signUpForm.onsubmit = () => {
+            if (!validatePassword(signUpForm.password1.value)){
+                signUpForm.password1.setCustomValidity("Invalid")
+                passwordHelpText.style.display = "none"
+                signUpForm.password1.addEventListener("input", validatingPassword)
+                validatePasswordMatch(password1Input, password2Input)
+                return false;
+            }
+        }
+    </script>
+{% endblock %}

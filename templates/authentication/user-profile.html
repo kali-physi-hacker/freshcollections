@@ -1,0 +1,128 @@
+{% extends 'authentication/user-base.html' %}
+{% load static %}
+
+{% block detail_content %}
+    <div class="container pb-5 mb-2 mb-md-3">
+      <div class="row">
+      <!-- Sidebar -->
+      {% include 'components/user-sidebar.html' %}
+
+        <!-- Content  -->
+        <section class="col-lg-8">
+          <!-- Toolbar-->
+          <div class="d-none d-lg-flex justify-content-between align-items-center pt-lg-3 pb-4 pb-lg-5 mb-lg-3">
+            <h6 class="font-size-base text-light mb-0">Update you profile details below:</h6>
+            <a class="btn btn-primary btn-sm" href="{% url 'authentication:logout' %}">
+                <i class="czi-sign-out mr-2"></i>Sign out
+            </a>
+          </div>
+          <!-- Profile form-->
+          <form id="profileForm" method="POST" class="needs-validation" autocomplete="off" novalidate action="{% url 'authentication:update_user_profile' %}">
+            {% csrf_token %}
+              <div class="bg-secondary rounded-lg p-4 mb-4">
+              <div class="media align-items-center">
+                  {% if profile.photo %}
+                      <img src="img/shop/account/avatar.jpg" width="90" alt="Susan Gardner">
+                  {% else %}
+                      <i class="font-size-xl czi-user-circle"></i>
+                  {% endif %}
+                <div class="media-body pl-3">
+                  <button class="btn btn-light btn-shadow btn-sm mb-2" type="button"><i class="czi-loading mr-2"></i>Change avatar</button>
+                  <div class="p mb-0 font-size-ms text-muted">Upload JPG, GIF or PNG image. 300 x 300 required.</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="account-fn">First Name</label>
+                  <input class="form-control" type="text" id="account-fn" value="{{ profile.user.first_name }}">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="account-ln">Last Name</label>
+                  <input class="form-control" type="text" id="account-ln" value="{{ profile.user.last_name }}">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="account-email">Email Address</label>
+                  <input class="form-control" type="email" id="account-email" value="{{ profile.user.email }}" disabled>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="account-phone">Phone Number</label>
+                  <input class="form-control" type="text" id="account-phone" value="+233 {{ profile.telephone_number }}" required>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="account-pass">New Password</label>
+                  <div class="password-toggle">
+                    <input name="password1" class="form-control" type="password" id="account-pass">
+                    <label class="password-toggle-btn">
+                      <input class="custom-control-input" type="checkbox"><i class="czi-eye password-toggle-indicator"></i><span class="sr-only">Show password</span>
+                    </label>
+                  </div>
+                    <small id="password-help-text" class="form-text text-muted">Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.</small>
+                    <div class="valid-tooltip">Looks good!</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="account-confirm-pass">Confirm Password</label>
+                  <div class="password-toggle">
+                    <input name="password2" class="form-control" type="password" id="account-confirm-pass">
+                    <label class="password-toggle-btn">
+                      <input class="custom-control-input" type="checkbox"><i class="czi-eye password-toggle-indicator"></i><span class="sr-only">Show password</span>
+                    </label>
+                  </div>
+                    <div id="password-valid-div" class="valid-tooltip">Looks good</div>
+                    <div id="password-invalid-div" class="invalid-tooltip">Password mismatch</div>
+                </div>
+              </div>
+              <div class="col-12">
+                <hr class="mt-2 mb-3">
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                  <div class="custom-control custom-checkbox d-block">
+                    <input class="custom-control-input" type="checkbox" id="subscribe_me" checked>
+                    <label class="custom-control-label" for="subscribe_me">Subscribe me to Newsletter</label>
+                  </div>
+                  <button class="btn btn-primary mt-3 mt-sm-0" type="submit">Update profile</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+{#    TODO: Fix bug with the implementation of password match validation with an error text #}
+    <script src="{% static 'js/utils' %}"></script>
+    <script>
+        const profileForm = document.querySelector("#profileForm");
+
+        const password2ErrorText = document.querySelector("#password-invalid-div");
+        const password2ValidText = document.querySelector("#password-valid-div");
+        const passwordHelpText = document.querySelector("#password-help-text")
+
+        const password1Input = profileForm.password1;
+        const password2Input = profileForm.password2;
+
+        profileForm.onsubmit = () => {
+            console.log("Submiting")
+            if (!validatePassword(password1Input.value)) {
+                password1Input.setCustomValidity("Invalid")
+                passwordHelpText.style.display = "none"
+                password1Input.addEventListener("input", validatingPassword)
+                validatePasswordMatch(password1Input, password2Input)
+                return false;
+            }
+        }
+    </script>
+{% endblock %}

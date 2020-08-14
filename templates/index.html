@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+     <!-- Hero slider-->
+    {% include 'components/carousel.html' %}
+    <!-- Category (Women)-->
+    {% include 'components/category-women.html' %}
+    <!-- Category (Men)-->
+    {% include 'components/category-men.html' %}
+    <!-- Category (Kids)-->
+    {% include 'components/category-kids.html' %}
+    <!-- Shop by brand-->
+    {% include 'components/shop-brands.html' %}
+    <!-- Product widgets-->
+    {% include 'components/product-widgets.html' %}
+    <!-- Blog + Instagram info cards-->
+    {% include 'components/social-info-cards.html' %}
+{% endblock content %}
