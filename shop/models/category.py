@@ -6,7 +6,7 @@ from shop.helpers import upload_path, generate_random_name
 class Category(models.Model):
     name = models.CharField(max_length=150, unique=True)
     image = models.ImageField(upload_to=upload_path)
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(unique=True, blank=True)
 
     class Meta:
         ordering = ('name',)
