@@ -26,7 +26,7 @@ def generate_random_name(title=None):
     """
     if title is None:
         title = ""
-    random_name = f"{title}-{_.uuid4().hex}-{random.random(1, RANDOM_LIMIT)}"
+    random_name = f"{title}-{_.uuid4().hex}-{random.randint(1, RANDOM_LIMIT)}"
     return random_name
 
 
@@ -38,6 +38,6 @@ def upload_path(instance, file_path):
     :return:
     """
     file_name, ext = get_file_name_ext(file_path)
-    random_name = f"{generate_random_name(file_name)}{ext}"
-    final_name = f"products/{random_name}"
-    return f"{timezone.now()}/products/{final_name}"
+    random_name = f"{generate_random_name(instance.name).lower()}{ext}"
+    final_name = f"categories/{random_name}"
+    return f"shop/{final_name}"
