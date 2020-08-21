@@ -37,7 +37,6 @@ class Product(models.Model):
         """
         self.slug = generate_random_name(self.name)
 
-
     objects = models.Manager()
     active = ProductActiveManager()
 
