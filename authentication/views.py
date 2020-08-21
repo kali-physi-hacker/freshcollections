@@ -211,7 +211,6 @@ def change_password_page(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         template = "authentication/change-password.html"
         post_url = reverse("authentication:change_password", args=[uid])
-        # import pdb; pdb.set_trace()
         context = {"post_url": post_url}
         return render(request, template, context)
 
@@ -222,10 +221,13 @@ def change_password(request, pk):
         user = User.objects.get(pk=pk)
         user.set_password(password)
         user.save()
-        user.backend = "authentication.backend.EmailBackend"
-        return login(request, user=user)
+        return redirect("authentication:password_change_success")
 
-        # return redirect("home"
+
+def password_change_success(request):
+    template = "authentication/password-change-success.html"
+    context = {}
+    return render(request, template, context=context)
 
 
 @login_required
