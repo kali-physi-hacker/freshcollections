@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/estore
     ports:
-      - 8001:8001
+      - 8001:8000
 
   stage:
     build: .
@@ -19,7 +19,7 @@ services:
     volumes:
       - .:/estore
     ports:
-      - 8002:8002
+      - 8002:8000
 
   production:
     build: .
